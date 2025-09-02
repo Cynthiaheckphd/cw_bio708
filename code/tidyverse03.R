@@ -91,11 +91,13 @@ df0 <- tibble(x = rep(1:50, 3),
               y = x * 2)
 df0 %>%
   ggplot(aes(x = x,
-             y = y))
+             y = y)) +
+  geom_line()
 
 #histogram
 iris %>%
-  ggplot(aes(x = Sepal.Length))
+  ggplot(aes(x = Sepal.Length)) +
+  geom_histogram()
 
 # histogram colored by Species
 iris %>%
