@@ -49,3 +49,92 @@ df_means <- iris_sub %>%
   group_by(Species) %>%
   summarize(mean_pw = mean(Petal.Width)) %>%
   ungroup()
+
+
+
+# ggplot ------------------------------------------------------------------
+
+# basic syntax
+## without pipe
+g_example <- ggplot(data = iris,
+       mapping = aes(x = Sepal.Length,
+                     y = Sepal.Width)) +
+  geom_point()
+
+## with pipe
+(g_example <- iris %>%
+  ggplot(mapping = aes(x = Sepal.Length,
+                       y = Sepal.Width)) +
+  geom_point())
+
+# color
+(g_col <- iris %>%
+  ggplot(mapping = aes(x = Sepal.Length,
+                       y = Sepal.Width,
+                       color = Species)) +
+  geom_point())
+
+# pitfall 
+#iris %>%
+ # ggplot(mapping = aes(x = Sepal.Length,
+  #                     y = Sepal.Width),
+   #                    color = Species) +
+  #geom_point()
+
+(g_scolor <- iris %>%
+  ggplot(mapping = aes(x = Sepal.Length,
+                       y = Sepal.Width)) +
+  geom_point(color = 'magenta'))
+
+## line plot
+df0 <- tibble(x = rep(1:50, 3),
+              y = x * 2)
+df0 %>%
+  ggplot(aes(x = x,
+             y = y))
+
+#histogram
+iris %>%
+  ggplot(aes(x = Sepal.Length))
+
+# histogram colored by Species
+iris %>%
+  ggplot(aes(x = Sepal.Length,
+             color = Species)) +
+  geom_histogram()
+
+# histogram filled by species
+iris %>%
+  ggplot(aes(x = Sepal.Length,
+             fill = Species)) +
+  geom_histogram()
+
+# basic plot
+iris %>% 
+  ggplot(aes(x = Species,
+             y = Sepal.Length)) +
+  geom_boxplot()
+
+# boxplot filled by species
+iris %>% 
+  ggplot(aes(x = Species,
+             y = Sepal.Length,
+             fill = Species)) +
+  geom_boxplot()
+
+# use multiple layers
+## example 1
+iris %>% 
+  ggplot(aes(x = Species,
+             y = Sepal.Length,
+             fill = Species)) +
+  geom_boxplot() +
+  geom_point()
+
+## example 2
+iris %>% 
+  ggplot(aes(x = Species,
+             y = Sepal.Length,
+             fill = Species)) +
+  geom_boxplot() +
+  geom_jitter(alpha = 0.5)
