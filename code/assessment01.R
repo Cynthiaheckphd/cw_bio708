@@ -8,14 +8,14 @@
 
 # 2: Create a vector containing 20 "a", 30 "b", and 50 "c" (total length = 100).  
 # Assign it to `v_abc100`.
-(v_abc100 <- rep("a", 20, "b", 20, "c", 50, length = 100))
+(v_abc100 <- c(rep("a", times = 20), rep("b", times = 30), rep("c", times = 50)))
 
 # 3: The script below creates a vector `v_x` with 100 random numbers from a normal distribution.  
 # Select only the positive numbers (> 0) from `v_x`, calculate their mean, and assign it to `mu_x_plus`.
 set.seed(100)
 v_x <- rnorm(100)
 
-(mu_x_plus <- mean(v_x > 0))
+(mu_x_plus <- mean(v_x[v_x > 0]))
 
 # 4: Create a numeric matrix with the numbers 1 through 9 arranged in 3 rows × 3 columns.  
 # Assign it to `m_num`.
@@ -77,29 +77,45 @@ mutate(df_mtcars, make = v_make)
 # 12: Count how many car makes meet the above conditions (Q11).
 # Apply `nrow()` to `df_subset`.
 
-(df_subset %>%
-  count(mpg < 20 & disp >200))
-
-mutate(df_subset, nrow(15))
+nrow(df_subset)
 
 # 13: Repeat Q11 and Q12 in a single pipeline (with %>%), and assign the result to `n_make`.
 (df_subset <- df_mtcars %>%
-  filter(mpg < 20 & disp > 200) %>%
-  count(mpg < 20 & disp > 200))
-n_make <- mutate(df_subset, nrow(15))
+  filter(mpg < 20 & disp > 200))
+
+n_make <- nrow(df_subset)
 
 # 14: Convert the `cyl` column from numeric to factor using `factor()`.  
 # Add it to `df_mtcars` as a new column named `f_cyl` using `mutate()` function.
 
-select(df_mtcars, cyl)
+df_mtcars <- df_mtcars %>%
+  mutate(f_cyl = factor(cyl))
 
 # 15: Draw a box plot showing car weight (`wt`) for each number of cylinders (`f_cyl`).
 
+df_mtcars %>%
+  ggplot(aes(x = f_cyl,
+             y= wt)) +
+  geom_boxplot() +
+  geom_point()
+
 # 16: Calculate the average car weight (`wt`) separately for each number of cylinders (`cyl`).
+df_mtcars %>%
+  group_by(cyl) %>%
+  summarize(mu_wt = mean(wt)) %>%
+  ungroup()
 
 # 17: Identify the heaviest car make (`wt`) among cars with 6 cylinders (`cyl`).
 
+df_mtcars %>%
+  group_by(cyl) %>%
+  summarize(hvy_wt = max(wt))
+
 # 18: Create a histogram showing the distribution of 1/4 mile time (`qsec`).
+
+df_mtcars %>%
+  ggplot(aes(qsec)) +
+  geom_histogram()
 
 # 19: The following script creates two tibbles:  
 # `df_length` (body length) and `df_weight` (body weight),  
@@ -121,5 +137,15 @@ df_length <- tibble(length = v_l,
 df_weight <- tibble(weight = v_w,
                     sp_code = v_sp)
 
+(df_fish <- left_join(x = df_length,
+          y = df_weight, 
+          by = "sp_code"))
+
 # 20: Draw a scatter plot (point plot) of `length` vs. `weight` from `df_fish`,  
 # coloring the points by species code (`sp_code`).
+
+df_fish %>%
+  ggplot(mapping = aes(x = length,
+                       y = weight,
+                       color = sp_code)) +
+  geom_point()
