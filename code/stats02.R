@@ -29,7 +29,8 @@ print(df_h2)
 
 
 ## read garden excel
-df_h0 <- read_csv("data_raw/data_plant_height.csv")
+#install.packages("here")
+df_h0 <- read_csv(here::here("data_raw/data_plant_height.csv"))
 
 mu <- mean(df_h0$height)
 sigma2 <- sum(((df_h0$height - mu)^2) / nrow(df_h0))
