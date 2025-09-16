@@ -1,4 +1,4 @@
-##library(tidyverse)
+library(tidyverse)
 # 7.3.1
 # Q1 ----------------------------------------------------------------------
 
@@ -57,7 +57,8 @@ g2 <- df_z %>%
              color = "green") +
   geom_vline(xintercept = med_zrev,
              color = "blue")
-##library(patchwork)
+
+library(patchwork)
 g1 / g2
 
 # 7.3.2
