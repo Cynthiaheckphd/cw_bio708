@@ -2,7 +2,7 @@
 library(tidyverse)
 library(patchwork)
 # load csv data on R
-df_h0 <- read_csv("data_raw/data_plant_height.csv")
+df_h0 <- read_csv(here::here("data_raw/data_plant_height.csv"))
 
 df_h0 %>% 
   ggplot(aes(x = height)) + 
@@ -72,7 +72,7 @@ df_h0 %>%
 ##distribution is used more for counts where there are no decimals
 
 ## data for plant counts in garden
-df_count <- read_csv("data_raw/data_garden_count.csv")
+df_count <- read_csv(here::here("data_raw/data_garden_count.csv"))
 print(df_count)
 
 ##histogram
