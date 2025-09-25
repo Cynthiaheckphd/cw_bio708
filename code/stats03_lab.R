@@ -42,13 +42,6 @@ bin <- seq(0, 10, by = 1)
 
 pm <- dpois(x, lambda = mean(x))
 
-tibble(y = pm, x = x) %>%
-  ggplot(aes(x = x, y = y)) +
-  geom_line(linetype = "dashed") +
-  geom_point() +
-  labs(y = "Probability",
-       x = "Count")
-
 df_prob <- tibble(x = x,
                   y = pm) %>%
   mutate(freq = pm * length(x))
