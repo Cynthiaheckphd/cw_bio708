@@ -91,9 +91,15 @@ pnorm(q = 0, mean = 0, sd = 1) # returns 0.5
 
 # Questions:
 # 1. Calculate the probability that 0 < x <= 10 for a normal distribution with mean = 5 and sd = 3.
-#    Hint: Use `qnorm()` function and subtract P(x <= 0) from P(x <= 10).
+#    Hint: Use `pnorm()` function and subtract P(x <= 0) from P(x <= 10).
+p0 <- pnorm(q = 0, mean = 5, sd = 3)
+p10 <- pnorm(q= 10, mean = 5, sd = 3)
+p10 - p0
 
 # 2. Calculate the probability that 0 < x <= 10 for a normal distribution with mean = -5 and sd = 3.
+p0n <- pnorm(q = 0, mean = -5, sd = 3)
+p10n <- pnorm(q= 10, mean = -5, sd = 3)
+p10n - p0n
 
 # t-test ------------------------------------------------------------------
 
