@@ -36,13 +36,34 @@ df_s3 %>%
 #    c. Assign the result to `mu5[i]`. 
 #       (Hint: initialize an empty object `mu5` before starting the loop.)
 #    This procedure will yield 100 estimates of the mean Petal.Width from 5 individuals.
+mu5 <- NULL
+for (i in 1:100) {
+  df_s5 <- df_iris %>% 
+    filter(Species == "versicolor") %>% 
+    sample_n(size = 5)
+  
+  (mu5[i] <- mean(df_s5$Petal.Width))
+  }
 
 # 2. Calculate the standard deviation of `mu5` and assign it to `s_mu5`.
 
+(s_mu5 <- sd(mu5))
+
 # 3. Repeat step 1 but sample 20 individuals in each iteration, and assign the results to `mu20`.
+mu20 <- NULL
+for (i in 1:100) {
+  df_s5 <- df_iris %>% 
+    filter(Species == "versicolor") %>% 
+    sample_n(size = 20)
+  
+  (mu20[i] <- mean(df_s5$Petal.Width))
+}
+
 
 # 4. Calculate the standard deviation of `mu20` and assign it to `s_mu20`.
 #    Verify that `s_mu20` is smaller than `s_mu5` by printing the comparison (`s_mu20 < s_mu5`)
+(s_mu20 <- sd(mu20))
+print(s_mu20 < s_mu5)
 
 # probability density -----------------------------------------------------
 
