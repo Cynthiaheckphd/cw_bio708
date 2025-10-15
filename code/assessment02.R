@@ -113,8 +113,22 @@ p10n - p0n
 # 1. Using the `df_iris` dataset, calculate the variance of "Petal.Length" for each species.
 #    (Hint: use `group_by()` and `summarize()` from dplyr.)
 
+df_iris %>%
+  group_by(Species) %>%
+  summarize(var_l = var(Petal.Length),
+            n = n())
+  
+
 # 2. Perform a t-test comparing "Petal.Length" between "setosa" and "versicolor".
 #    Choose the appropriate `var.equal` option depending on whether the SDs appear equal.
+x <- df_iris %>%
+  filter(Species == "setosa") %>%
+  pull(Petal.Length)
+y <- df_iris %>%
+  filter(Species == "versicolor") %>%
+  pull(Petal.Length)
+
+t.test(x, y, var.equal = FALSE)
 
 # anova -------------------------------------------------------------------
 
@@ -129,8 +143,20 @@ df_insect <- as_tibble(InsectSprays)
 # 1. Using the `df_insect` dataset, create a plot to visualize the distribution of insect counts for each spray type.
 #    - Use a violin plot to show the distribution and include the median (y = count, x = spray).
 #    - Add individual data points with a small horizontal jitter for clarity.
+df_insect %>%
+  ggplot(aes(x = spray,
+             y = count)) +
+  geom_violin(draw_quantiles = 0.5,
+              alpha = 0.2,
+              fill = "lightblue") +
+  geom_jitter(width = 0.1)
+
 
 # Question:
 # 2. Using the `df_insect` dataset, perform a one-way ANOVA to test whether insect counts differ among spray types.
 #    - Use the `aov()` function and display the summary of the model with `summary()`.
 #    - Report if there was a significant difference between spray groups.
+
+aov_insect <- aov(count ~ spray,
+    data = df_insect)
+summary(aov_insect) # significant difference among spray group counts
