@@ -31,37 +31,37 @@ ggplot(data = df_count) +
 (y <- rpois(n = 10, lambda = 2))
 
 ## apply Poisson distribution using glm()
-glm(count ~ nitrate,
+m_pois <- glm(count ~ nitrate,
     data = df_count,
     family = "poisson")
 
-#ggplot(df_count) +
-#  geom_point(aes( x = nitrate,
-#                  y = count)) +
-#  geom_abline(intercept = coef(m_pois)[1],
-#              slope = coef(m_pois)[2])
+ggplot(df_count) +
+  geom_point(aes( x = nitrate,
+                  y = count)) +
+  geom_abline(intercept = coef(m_pois)[1],
+              slope = coef(m_pois)[2])
 
 
-#df_pred <- tibble(nitrate = seq(min(df_count$nitrate),
-#                     max(df_count$nitrate),
-#                     length = 100))
+df_pred <- tibble(nitrate = seq(min(df_count$nitrate),
+                     max(df_count$nitrate),
+                     length = 100))
 
-#y_pred <- predict(m_pois,
-#                  newdata = df_pred) %>%
-#  exp()
+y_pred <- predict(m_pois,
+                  newdata = df_pred) %>%
+  exp()
 
-#df_pred <- df_pred %>%
-#  mutate(y = y_pred)
+df_pred <- df_pred %>%
+  mutate(y = y_pred)
 
-#ggplot(df_count,
-#       aes(x = nitrate,
-#           y = count)) +
-#  geom_point() +
-#  geom_line(data = df_pred,
-#            aes(y = y))
+ggplot(df_count,
+       aes(x = nitrate,
+           y = count)) +
+  geom_point() +
+  geom_line(data = df_pred,
+            aes(y = y))
 
-#summary(m_pois)
-#summary(m_normal)
+summary(m_pois)
+summary(m_normal)
 
 
 # binomial modeling -------------------------------------------------------
