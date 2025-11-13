@@ -55,12 +55,49 @@ summary(m1)
 
 ## model comparison
 m1 <- lm(y ~ x1,
-         data = df0) %>%
-  summary()
+         data = df0) 
 
-m2 <- lm(y ~ x1 + x2, data = df0) %>%
-  summary()
+m2 <- lm(y ~ x1 + x2, data = df0) 
 
 m3 <- lm(y ~ x2,
-         data = df0) %>%
-  summary()
+         data = df0) 
+## can only look at the adj sums squared when looking at normal distribution
+## look at adj in model to account for complexity
+
+
+# likelihood ratio test ---------------------------------------------------
+
+logLik(m1)
+logLik(m2)
+
+## deviance 
+
+dev_m1 <- -2 * logLik(m1)
+dev_m2 <- -2 * logLik(m2)
+log_lr <- dev_m1 - dev_m2 #log likelihood ratio
+
+# compare model performance through likelihood test using anova
+anova(m1, m2, test = "Chisq")
+
+
+# AIC ---------------------------------------------------------------------
+
+AIC(m1)
+AIC(m2)
+
+# multi model inference with AIC
+
+#install.packages("MuMIn")
+library(MuMIn)
+
+url <- "https://raw.githubusercontent.com/aterui/public-proj_fish-richness-shubuto/master/data/data_vpart.csv"
+df_fish <- read_csv(url)
+
+m_full <- glm(n_sp ~ distance + cat_area + hull_area,
+              data = df_fish,
+              family = "poisson")
+## magic spell
+options(na.action = "na.fail")
+
+mst <- dredge(m_full,
+       rank = "AIC")
