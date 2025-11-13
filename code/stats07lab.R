@@ -5,7 +5,7 @@ pacman::p_load(tidyverse,
 
 # 13.4.1 ------------------------------------------------------------------
 
-## normalty assumption
+## normality assumption
 
 print(ToothGrowth)
 
